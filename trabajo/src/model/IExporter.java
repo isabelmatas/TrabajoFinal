@@ -1,5 +1,4 @@
 package model;
-import java.rmi.server.ExportException;
 import java.util.ArrayList;
 
 public interface IExporter
