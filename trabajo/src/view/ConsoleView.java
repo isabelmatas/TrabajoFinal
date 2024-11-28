@@ -20,7 +20,8 @@ public class ConsoleView extends BaseView
             System.out.println("8. Importar CSV");
             System.out.println("9. Exportar JSON");
             System.out.println("10. Importar JSON");
-            System.out.println("Volver al menu principal");
+            System.out.println("11. Volver al menu principal");
+            opcion = readInt("Introduce una opcion: ");
             
             switch(opcion)
             {
@@ -60,5 +61,18 @@ public class ConsoleView extends BaseView
         } while(opcion != 7);
     }
 
-    
+    public void showMessage(String mensaje)
+    {
+        System.out.println(mensaje);
+    }
+
+    public void showErrorMessage(String mensajeError)
+    {
+        System.err.println(mensajeError);
+    }
+
+    public void end()
+    {
+        showMessage("Saliendo...");
+    }
 }
