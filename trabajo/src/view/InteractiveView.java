@@ -2,7 +2,7 @@ package view;
 import controller.Controller;
 import static com.coti.tools.Esdia.*;
 
-public class ConsoleView extends BaseView
+public class InteractiveView extends BaseView
 {
     public void init()
     {
