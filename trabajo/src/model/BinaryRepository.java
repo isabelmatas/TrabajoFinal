@@ -49,7 +49,7 @@ public class BinaryRepository implements IRepository
         }
     }
 
-    public Task agregarTarea(Task tarea) throws RepositoryException
+    public Task addTask(Task tarea) throws RepositoryException
     {
         for(Task t : tareas)
         {
@@ -63,7 +63,7 @@ public class BinaryRepository implements IRepository
         return tarea;
     }
 
-    public void eliminarTarea(Task tarea) throws RepositoryException
+    public void removeTask(Task tarea) throws RepositoryException
     {
         if(!tareas.remove(tarea))
         {
@@ -72,12 +72,12 @@ public class BinaryRepository implements IRepository
         guardarTareas();
     }
 
-    public void modificarTarea(Task tarea) throws RepositoryException
+    public void modifyTask(Task tarea) throws RepositoryException
     {
         //
     }
 
-    public ArrayList<Task> getAllTasks()
+    public ArrayList<Task> getAllTask()
     {
         return new ArrayList<>(tareas);
     }
