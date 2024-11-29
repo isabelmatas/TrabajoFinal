@@ -10,7 +10,7 @@ import java.text.SimpleDateFormat;
 
 public class CSVExporter implements IExporter
 {
-    public void exportarCSV(ArrayList<Task> tareas, String archivo) throws ExporterException
+    public void exportarTareas(ArrayList<Task> tareas, String archivo) throws ExporterException
     {
         try
         {
@@ -33,7 +33,7 @@ public class CSVExporter implements IExporter
         }
     }
 
-    public ArrayList<Task> importarCSV(String archivo) throws ExporterException
+    public ArrayList<Task> importarTareas(String archivo) throws ExporterException
     {
         ArrayList<Task> tareas = new ArrayList<>();
         try
