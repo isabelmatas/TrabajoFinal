@@ -1,5 +1,6 @@
 package model;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -39,7 +40,6 @@ public class CSVExporter implements IExporter
         {
             Path ruta = Path.of(archivo);
             List <String> lineas = Files.readAllLines(ruta);
-            SimpleDateFormat fecha = new SimpleDateFormat("yyyy-mm-dd");
 
             for(String linea : lineas)
             {
@@ -57,12 +57,29 @@ public class CSVExporter implements IExporter
         return tareas;
     }
 
-    public Task getTaskFromDelimitedString(String delimitedString, String delimitador)
+    public Task getTareaFromDelimitedString(String delimitedString, String delimitador)
     {
         String[] tasks = delimitedString.split(delimitador);
         if(tasks.length != 7)
         {
-            
+            return null;
+        }
+        try
+        {
+            int identifier = Integer.parseInt(tasks[0]);
+            String title = tasks[1];
+            SimpleDateFormat fecha = new SimpleDateFormat("yyyy-mm-dd");
+            Date date = fecha.parse(tasks[2]);
+            String content = tasks[3];
+            int priority = Integer.parseInt(tasks[4]);
+            int estimatedDuration = Integer.parseInt(tasks[5]);
+            boolean completed = Boolean.parseBoolean(tasks[6]);
+            return new Task(identifier, title, date, content, priority, estimatedDuration, completed);
+
+        }
+        catch(Exception e)
+        {
+            return null;
         }
     }
 }

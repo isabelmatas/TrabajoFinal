@@ -71,4 +71,14 @@ public class BinaryRepository implements IRepository
         }
         guardarTareas();
     }
+
+    public void modificarTarea(Task tarea) throws RepositoryException
+    {
+        //
+    }
+
+    public ArrayList<Task> getAllTasks()
+    {
+        return new ArrayList<>(tareas);
+    }
 }
