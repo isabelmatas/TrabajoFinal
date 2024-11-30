@@ -2,8 +2,15 @@ package view;
 import controller.Controller;
 import static com.coti.tools.Esdia.*;
 
+import java.io.IOException;
+
 public class InteractiveView extends BaseView
 {
+    public InteractiveView(Controller controlador)
+    {
+        super(controlador);
+    }
+
     public void init()
     {
         int opcion;
@@ -59,6 +66,19 @@ public class InteractiveView extends BaseView
                 
             }
         } while(opcion != 7);
+    }
+
+    public void darAlta()
+    {
+        try
+        {
+            int identifier = readInt("Introduce el identificador: ");
+            String titulo = readString("Introduce el titulo: ");
+        }
+        catch(Exception e)
+        {
+            showErrorMessage("ANSI_BLACK");
+        }
     }
 
     public void showMessage(String mensaje)

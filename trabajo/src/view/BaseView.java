@@ -3,11 +3,11 @@ import controller.Controller;
 
 public abstract class BaseView
 {
-    public Controller controller; 
+    public Controller controlador; 
 
-    public BaseView(Controller controller)
+    public BaseView(Controller controlador)
     {
-        this.controller = controller;
+        this.controlador = controlador;
     }
 
     public abstract void init();
