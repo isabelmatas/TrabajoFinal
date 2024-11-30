@@ -100,7 +100,7 @@ public class InteractiveView extends BaseView
     {
         try
         {
-            String tipo = readString("Introduce el tipo del archivo: (json/csv):");
+            String tipo = readString("Introduce el tipo del archivo (json/csv):");
             if(tipo == "json")
             {
                 String ruta = System.getProperty("user.home") + "output.json";
@@ -110,11 +110,33 @@ public class InteractiveView extends BaseView
                 String ruta = System.getProperty("user.home") + "output.csv";
             }
             controlador.exportarTareas(tipo, ruta); // por hacer
-            showMessage("La tarea se ha exportado correctamente");
+            showMessage("Las tareas se han exportado correctamente");
         }
         catch(Exception e)
         {
             showErrorMessage("Error al exportar las tareas: " + e.getMessage());
+        }
+    }
+
+    public void importarTareas()
+    {
+        try
+        {
+            String tipo = readString("Introduce el tipo del archivo (json/csv)");
+            if(tipo == "json")
+            {
+                String ruta = System.getProperty("user.home") + "output.json";
+            }
+            else if(tipo == "csv")
+            {
+                String ruta = System.getProperty("user.home") + "output.csv";
+            }
+            controlador.importarTareas(); // por hacer
+            showMessage("Las tareas se han importado correctamente");
+        }
+        catch(Exception e)
+        {
+            showErrorMessage("Error al importar las tareas: " + e.getMessage());
         }
     }
 
