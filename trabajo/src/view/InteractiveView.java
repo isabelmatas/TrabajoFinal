@@ -1,7 +1,7 @@
 package view;
 import controller.Controller;
 import static com.coti.tools.Esdia.*;
-
+import java.util.Date;
 import java.io.IOException;
 
 public class InteractiveView extends BaseView
@@ -74,10 +74,15 @@ public class InteractiveView extends BaseView
         {
             int identifier = readInt("Introduce el identificador: ");
             String titulo = readString("Introduce el titulo: ");
+            Date date = readDate("Introduce la fecha: "); // ??
+            String content = readString("Introduce el contenido: ");
+            int priority = readInt("Introduce la prioridad (1-5): ");
+            int estimatedDuration = readInt("Introduce la duracion estimada: ");
+            boolean completed = readBoolean("Esta completada?: "); // ??
         }
         catch(Exception e)
         {
-            showErrorMessage("ANSI_BLACK");
+            showErrorMessage("Error al dar de alta la tarea: " + e.getMessage());
         }
     }
 
