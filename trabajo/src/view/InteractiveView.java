@@ -33,7 +33,7 @@ public class InteractiveView extends BaseView
             switch(opcion)
             {
                 case 1:
-                    darAlta();
+                    crearTarea();
                     break;
                 case 2:
                     listarTareasOrdenadas();
@@ -48,19 +48,13 @@ public class InteractiveView extends BaseView
                     modificar();
                     break;
                 case 6:
-                    eliminar();
+                    eliminarTarea();
                     break;
                 case 7:
-                    exportarCSV();
+                    exportarTareas();
                     break;
                 case 8:
-                    importarCSV();
-                    break;
-                case 9:
-                    exportarJSON();
-                    break;
-                case 10:
-                    importarJSON();
+                    importarTareas();
                     break;
                 case 11:
                 
@@ -68,7 +62,7 @@ public class InteractiveView extends BaseView
         } while(opcion != 7);
     }
 
-    public void darAlta()
+    public void crearTarea()
     {
         try
         {
@@ -79,10 +73,38 @@ public class InteractiveView extends BaseView
             int priority = readInt("Introduce la prioridad (1-5): ");
             int estimatedDuration = readInt("Introduce la duracion estimada: ");
             boolean completed = readBoolean("Esta completada?: "); // ??
+            controlador.crearTarea(identifier, titulo, date, content, priority, estimatedDuration, completed); // por hacer
+            showMessage("La tarea se ha creado");
         }
         catch(Exception e)
         {
-            showErrorMessage("Error al dar de alta la tarea: " + e.getMessage());
+            showErrorMessage("Error al crear la tarea: " + e.getMessage());
+        }
+    }
+
+    public void eliminarTarea()
+    {
+        try
+        {
+            int identifier = readInt("Introduce el id de la tarea a eliminar: ");
+            controlador.eliminarTarea(identifier); // por hacer
+            showMessage("La tarea se ha eliminado");
+        }
+        catch(Exception e)
+        {
+            showErrorMessage("Error al eliminar la tarea: " + e.getMessage());
+        }
+    }
+
+    public void exportarTareas()
+    {
+        try
+        {
+
+        }
+        catch(Exception e)
+        {
+            showErrorMessage("Error al exportar las tareas: " + e.getMessage());
         }
     }
 
