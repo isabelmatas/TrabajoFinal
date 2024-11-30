@@ -14,7 +14,7 @@ public class BinaryRepository implements IRepository
 
     public BinaryRepository() throws RepositoryException
     {
-        //
+        cargarTareas();
     }
 
     public void cargarTareas() throws RepositoryException
@@ -74,7 +74,20 @@ public class BinaryRepository implements IRepository
 
     public void modifyTask(Task tarea) throws RepositoryException
     {
-        //
+        for(Task t : tareas)
+        {
+            if(t.getIdentifier() == tarea.getIdentifier())
+            {
+                t.setTitle(tarea.getTitle());
+                t.setDate(tarea.getDate());
+                t.setContent(tarea.getContent());
+                t.setPriority(tarea.getPriority());
+                t.setEstimatedDuration(tarea.getEstimatedDuration());
+                t.setCompleted(tarea.getCompleted());
+                // necesito algo aqui
+            }
+        }
+        throw new RepositoryException("La tarea no se ha encontrado");
     }
 
     public ArrayList<Task> getAllTask()
