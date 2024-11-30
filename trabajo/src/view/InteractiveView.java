@@ -1,6 +1,8 @@
 package view;
 import controller.Controller;
+import model.Task;
 import static com.coti.tools.Esdia.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.io.IOException;
 
@@ -39,7 +41,7 @@ public class InteractiveView extends BaseView
                     listarTareasOrdenadas();
                     break;
                 case 3:
-                    listarHistorial();
+                    mostrarHistorial();
                     break;
                 case 4:
                     marcar();
@@ -137,6 +139,29 @@ public class InteractiveView extends BaseView
         catch(Exception e)
         {
             showErrorMessage("Error al importar las tareas: " + e.getMessage());
+        }
+    }
+
+    public void mostrarHistorial()
+    {
+        try
+        {
+            ArrayList<Task> tareas = controlador.getAllTask();
+            if(tareas.isEmpty())
+            {
+                showMessage("No hay tareas disponibles");
+            }
+            else
+            {
+                for(Task tarea : tareas)
+                {
+                    System.out.println(tarea);
+                }
+            }
+        }
+        catch(Exception e)
+        {
+            showErrorMessage("Error al mostrar el historial: " + e.getMessage());
         }
     }
 
