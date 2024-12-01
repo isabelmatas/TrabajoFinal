@@ -22,14 +22,12 @@ public class InteractiveView extends BaseView
             System.out.println("1. Crear tarea");
             System.out.println("2. Listar tareas incompletas ordenadas por prioridad");
             System.out.println("3. Listar todas las tareas"); // completadas o no
-            System.out.println("4. Marcar como completa o incompleta");
+            System.out.println("4. Marcar tarea como completa o incompleta");
             System.out.println("5. Modificar tarea");
             System.out.println("6. Eliminar tarea");
-            System.out.println("7. Exportar CSV");
-            System.out.println("8. Importar CSV");
-            System.out.println("9. Exportar JSON");
-            System.out.println("10. Importar JSON");
-            System.out.println("11. Volver al menu principal");
+            System.out.println("7. Exportar tareas (JSON/CSV)");
+            System.out.println("8. Importar tareas (JSON/CSV)");
+            System.out.println("9. Volver al menu principal");
             opcion = readInt("Introduce una opcion: ");
             
             switch(opcion)
@@ -38,16 +36,16 @@ public class InteractiveView extends BaseView
                     crearTarea();
                     break;
                 case 2:
-                    listarTareasOrdenadas();
+                    listarTareasIncompletas();
                     break;
                 case 3:
-                    mostrarHistorial();
+                    listarTareas();
                     break;
                 case 4:
-                    marcar();
+                    marcarTarea();
                     break;
                 case 5:
-                    modificar();
+                    modificarTarea();
                     break;
                 case 6:
                     eliminarTarea();
@@ -58,10 +56,14 @@ public class InteractiveView extends BaseView
                 case 8:
                     importarTareas();
                     break;
-                case 11:
-                
+                case 9:
+                    end();
+                    break;
+                default:
+                    System.out.println("Opcion no valida");
+                    break;
             }
-        } while(opcion != 7);
+        } while(opcion != 9);
     }
 
     public void crearTarea()
@@ -75,8 +77,8 @@ public class InteractiveView extends BaseView
             int priority = readInt("Introduce la prioridad (1-5): ");
             int estimatedDuration = readInt("Introduce la duracion estimada: ");
             boolean completed = readBoolean("Esta completada?: "); // ??
-            controlador.crearTarea(identifier, titulo, date, content, priority, estimatedDuration, completed); // por hacer
-            showMessage("La tarea se ha creado");
+            controlador.addTask(identifier, titulo, date, content, priority, estimatedDuration, completed); // por hacer
+            showMessage("La tarea se ha creado correctamente");
         }
         catch(Exception e)
         {
@@ -97,6 +99,62 @@ public class InteractiveView extends BaseView
             showErrorMessage("Error al eliminar la tarea: " + e.getMessage());
         }
     }
+
+    public void modificarTarea()
+    {
+        try
+        {
+            int identifier = readInt("Introduce el id de la tarea a modificar: ");
+        }
+    }
+
+    public void listarTareasIncompletas()
+    {
+        try
+        {
+            ArrayList<Task> tareas = controlador.getTareasIncompletas(); // por hacer
+            if(tareas.isEmpty())
+            {
+                showMessage("No hay tareas incompletas");
+            }
+            else
+            {
+                for(Task t : tareas)
+                {
+                    System.out.println(t);
+                }
+            }
+        }
+        catch(Exception e)
+        {
+            showErrorMessage("Error al listar las tareas: " + e.getMessage());
+        }
+    }
+
+    public void listarTareas()
+    {
+        try
+        {
+            ArrayList<Task> tareas = controlador.getAllTask();
+            if(tareas.isEmpty())
+            {
+                showMessage("No hay tareas disponibles");
+            }
+            else
+            {
+                for(Task t : tareas)
+                {
+                    System.out.println(t);
+                }
+            }
+        }
+        catch(Exception e)
+        {
+            showErrorMessage("Error al listar las tareas: " + e.getMessage());
+        } 
+    }
+
+
 
     public void exportarTareas()
     {
@@ -142,28 +200,6 @@ public class InteractiveView extends BaseView
         }
     }
 
-    public void mostrarHistorial()
-    {
-        try
-        {
-            ArrayList<Task> tareas = controlador.getAllTask();
-            if(tareas.isEmpty())
-            {
-                showMessage("No hay tareas disponibles");
-            }
-            else
-            {
-                for(Task tarea : tareas)
-                {
-                    System.out.println(tarea);
-                }
-            }
-        }
-        catch(Exception e)
-        {
-            showErrorMessage("Error al mostrar el historial: " + e.getMessage());
-        }
-    }
 
     public void showMessage(String mensaje)
     {
