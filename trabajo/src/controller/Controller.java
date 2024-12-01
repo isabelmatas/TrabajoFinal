@@ -17,10 +17,20 @@ public class Controller
         this.view = view;
     }
 
-    public void iniciar()
+    public void iniciarApliacion()
     {
+        try
+        {
+            repository.getAllTask();
+            view.showMessage("Se han cargado correctamente los datos");
+        }
+        catch(RepositoryException e)
+        {
+            view.showErrorMessage("Error al cargar los datos");
+        }
         view.init();
     }
+
 
     public ArrayList<Task> getAllTask() throws RepositoryException
     {
@@ -40,5 +50,17 @@ public class Controller
     public void modifyTask(Task t) throws RepositoryException
     {
         repository.modifyTask(t);
+    }
+
+    public Task comprobar(int identifier) throws RepositoryException
+    {
+        for(Task t : repository.getAllTask())
+        {
+            if(t.getIdentifier() == identifier)
+            {
+                return t;
+            }
+        }
+        return null;
     }
 }

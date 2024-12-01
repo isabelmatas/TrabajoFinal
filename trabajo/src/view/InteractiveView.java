@@ -19,12 +19,12 @@ public class InteractiveView extends BaseView
         do
         {
             System.out.println("MENU CRUD");
-            System.out.println("1. Dar de alta");
-            System.out.println("2. Listar tareas ordenadas por prioridad y que estan sin completar");
-            System.out.println("3. Listado del historial completo de tareas"); // completadas o no
+            System.out.println("1. Crear tarea");
+            System.out.println("2. Listar tareas incompletas ordenadas por prioridad");
+            System.out.println("3. Listar todas las tareas"); // completadas o no
             System.out.println("4. Marcar como completa o incompleta");
-            System.out.println("5. Modificar informacion");
-            System.out.println("6. Eliminar la tarea");
+            System.out.println("5. Modificar tarea");
+            System.out.println("6. Eliminar tarea");
             System.out.println("7. Exportar CSV");
             System.out.println("8. Importar CSV");
             System.out.println("9. Exportar JSON");
