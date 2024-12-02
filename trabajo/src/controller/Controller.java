@@ -1,7 +1,11 @@
 package controller;
 import view.BaseView;
 import java.util.ArrayList;
-
+import java.util.Collections;
+import java.util.Comparator;
+import model.ExporterException;
+import model.ExporterFactory;
+import model.IExporter;
 import model.IRepository;
 import model.RepositoryException;
 import model.Task;
@@ -17,7 +21,7 @@ public class Controller
         this.view = view;
     }
 
-    public void iniciarApliacion()
+    public void iniciarAplicacion()
     {
         try
         {
@@ -62,5 +66,74 @@ public class Controller
             }
         }
         return null;
+    }
+
+    public ArrayList<Task> getTareasIncompletas() throws RepositoryException
+    {
+        ArrayList<Task> tareasCompletas = repository.getAllTask();
+        ArrayList<Task> tareasIncompletas = new ArrayList<>();
+        for(Task t : tareasCompletas)
+        {
+            if(!t.getCompleted())
+            {
+                tareasIncompletas.add(t);
+            }
+        }
+        Collections.sort(tareasIncompletas, new Comparator<Task>()
+        {
+            public int compare(Task t1, Task t2)
+            {
+                return Integer.compare(t2.getPriority(), t1.getPriority());
+            }
+        });
+        return tareasIncompletas;
+    }
+
+    public void getTareasCompletas()
+    {
+        //
+    }
+
+    public void exportarTareas(String tipo, String ruta) throws RepositoryException
+    {
+        try
+        {
+            IExporter exporter = ExporterFactory.crearExporter(tipo);
+            ArrayList<Task> tareas = repository.getAllTask();
+            exporter.exportarTareas(tareas, ruta);
+        }
+        catch (ExporterException e)
+        {
+            view.showErrorMessage("Error al exportar las tareas: " + e.getMessage());
+        }
+    }
+
+    public void importarTareas(String tipo, String ruta) throws RepositoryException
+    {
+        try
+        {
+            IExporter exporter = ExporterFactory.crearExporter(tipo);
+            ArrayList<Task> tareas = exporter.importarTareas(ruta);
+            for(Task t : tareas)
+            {
+                try
+                {
+                    addTask(t);
+                }
+                catch(RepositoryException e)
+                {
+                    view.showErrorMessage("Error al importar la tarea");
+                }
+            }
+        }
+        catch(ExporterException e)
+        {
+            view.showErrorMessage("Error al importar las tareas: " + e.getMessage());
+        }
+    }
+
+    public void finalizarAplicacion()
+    {
+        //
     }
 }

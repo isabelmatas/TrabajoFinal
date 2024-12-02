@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class BinaryRepository implements IRepository
 {
-    private final String ruta = System.getProperty("user.home") + "tasks.bin";
+    private final String ruta = System.getProperty("user.home") + "/tasks.bin";
     private ArrayList<Task> tareas;
 
     public BinaryRepository() throws RepositoryException
@@ -26,9 +26,9 @@ public class BinaryRepository implements IRepository
             {
                 tareas = (ArrayList<Task>) ois.readObject();
             }
-            catch(IOException e)
+            catch(IOException | ClassNotFoundException e)
             {
-                throw new RepositoryException("Error al cargar las tareas");
+                throw new RepositoryException("Error al cargar las tareas: " +e.getMessage());
             }
         }
         else
@@ -74,6 +74,8 @@ public class BinaryRepository implements IRepository
 
     public void modifyTask(Task tarea) throws RepositoryException
     {
+        boolean tareaModificada = false;
+
         for(Task t : tareas)
         {
             if(t.getIdentifier() == tarea.getIdentifier())
@@ -84,10 +86,15 @@ public class BinaryRepository implements IRepository
                 t.setPriority(tarea.getPriority());
                 t.setEstimatedDuration(tarea.getEstimatedDuration());
                 t.setCompleted(tarea.getCompleted());
-                // necesito algo aqui
+                tareaModificada = true;
+                break;
             }
         }
-        throw new RepositoryException("La tarea no se ha encontrado");
+        if(!tareaModificada)
+        {
+            throw new RepositoryException("La tarea no se ha encontrado");
+        }
+        guardarTareas();
     }
 
     public ArrayList<Task> getAllTask()

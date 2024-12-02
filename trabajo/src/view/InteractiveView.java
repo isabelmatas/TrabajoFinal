@@ -4,10 +4,13 @@ import model.Task;
 import static com.coti.tools.Esdia.*;
 import java.util.ArrayList;
 import java.util.Date;
-import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Scanner;
 
 public class InteractiveView extends BaseView
 {
+    Scanner sc = new Scanner(System.in);
+
     public InteractiveView(Controller controlador)
     {
         super(controlador);
@@ -66,18 +69,28 @@ public class InteractiveView extends BaseView
         } while(opcion != 9);
     }
 
+
     public void crearTarea()
     {
         try
         {
             int identifier = readInt("Introduce el identificador: ");
-            String titulo = readString("Introduce el titulo: ");
-            Date date = readDate("Introduce la fecha: "); // ??
+            String title = readString("Introduce el titulo: ");
+            
+            System.out.print("Introduce la fecha (yyyy-mm-dd): ");
+            String fecha = sc.nextLine();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
+            Date date = dateFormat.parse(fecha); 
+
             String content = readString("Introduce el contenido: ");
             int priority = readInt("Introduce la prioridad (1-5): ");
             int estimatedDuration = readInt("Introduce la duracion estimada: ");
-            boolean completed = readBoolean("Esta completada?: "); // ??
-            controlador.addTask(identifier, titulo, date, content, priority, estimatedDuration, completed); // por hacer
+            
+            System.out.print("Tarea completada? (true/false): ");
+            boolean completed = Boolean.parseBoolean(sc.nextLine());
+
+            Task nuevaTarea = new Task(identifier, title, date, content, priority, estimatedDuration, completed);
+            controlador.addTask(nuevaTarea);
             showMessage("La tarea se ha creado correctamente");
         }
         catch(Exception e)
@@ -91,8 +104,16 @@ public class InteractiveView extends BaseView
         try
         {
             int identifier = readInt("Introduce el id de la tarea a eliminar: ");
-            controlador.eliminarTarea(identifier); // por hacer
-            showMessage("La tarea se ha eliminado");
+            Task tarea = controlador.comprobar(identifier);
+            if(tarea == null)
+            {
+                showMessage("La tarea no se ha encontrado");
+            }
+            else
+            {
+                controlador.removeTask(tarea);
+                showMessage("La tarea se ha eliminado");
+            }
         }
         catch(Exception e)
         {
@@ -105,6 +126,33 @@ public class InteractiveView extends BaseView
         try
         {
             int identifier = readInt("Introduce el id de la tarea a modificar: ");
+            Task tarea = controlador.comprobar(identifier);
+            if(tarea == null)
+            {
+                showMessage("La tarea no se ha encontrado");
+            }
+            String title = readString("Introduce el nuevo titulo: ");
+            String content = readString("Introduce el nuevo contenido: ");
+
+            System.out.print("Introduce la nueva fecha (yyyy-mm-dd): ");
+            String fecha = sc.nextLine();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
+            Date date = dateFormat.parse(fecha); 
+
+            int priority = readInt("Introduce la nueva prioridad (1-5): ");
+            int estimatedDuration = readInt("Introduce la nueva duracion: ");
+
+            System.out.print("Tarea completada? (true/false): ");
+            boolean completed = Boolean.parseBoolean(sc.nextLine());
+
+            Task nuevaTarea = new Task(identifier, title, date, content, priority, estimatedDuration, completed); 
+
+            controlador.modifyTask(nuevaTarea);
+            showMessage("La tarea se ha modificado correctamente");
+        }
+        catch(Exception e)
+        {
+            showErrorMessage("Error al modificar la tarea: " + e.getMessage());
         }
     }
 
@@ -112,7 +160,7 @@ public class InteractiveView extends BaseView
     {
         try
         {
-            ArrayList<Task> tareas = controlador.getTareasIncompletas(); // por hacer
+            ArrayList<Task> tareas = controlador.getTareasIncompletas();
             if(tareas.isEmpty())
             {
                 showMessage("No hay tareas incompletas");
@@ -154,22 +202,13 @@ public class InteractiveView extends BaseView
         } 
     }
 
-
-
     public void exportarTareas()
     {
         try
         {
             String tipo = readString("Introduce el tipo del archivo (json/csv):");
-            if(tipo == "json")
-            {
-                String ruta = System.getProperty("user.home") + "output.json";
-            }
-            else if(tipo == "csv")
-            {
-                String ruta = System.getProperty("user.home") + "output.csv";
-            }
-            controlador.exportarTareas(tipo, ruta); // por hacer
+            String ruta = System.getProperty("user.home") + "/output." + tipo;
+            controlador.exportarTareas(tipo, ruta);
             showMessage("Las tareas se han exportado correctamente");
         }
         catch(Exception e)
@@ -182,16 +221,9 @@ public class InteractiveView extends BaseView
     {
         try
         {
-            String tipo = readString("Introduce el tipo del archivo (json/csv)");
-            if(tipo == "json")
-            {
-                String ruta = System.getProperty("user.home") + "output.json";
-            }
-            else if(tipo == "csv")
-            {
-                String ruta = System.getProperty("user.home") + "output.csv";
-            }
-            controlador.importarTareas(); // por hacer
+            String tipo = readString("Introduce el tipo del archivo (json/csv):");
+            String ruta = System.getProperty("user.home") + "/output." + tipo;
+            controlador.importarTareas(tipo, ruta);
             showMessage("Las tareas se han importado correctamente");
         }
         catch(Exception e)
@@ -200,6 +232,29 @@ public class InteractiveView extends BaseView
         }
     }
 
+    public void marcarTarea()
+    {
+        try
+        {
+            int identifier = readInt("Introduce el id de la tarea para maracarla como completada/incompletada: ");
+            Task tarea = controlador.comprobar(identifier);
+            if(tarea == null)
+            {
+                showMessage("La tarea no se ha encontrado");
+            }
+            else
+            {
+                boolean estado = !tarea.getCompleted();
+                tarea.setCompleted(estado);
+                controlador.modifyTask(tarea);
+                showMessage("El estado se ha cambiado correctamente");
+            }
+        }
+        catch(Exception e)
+        {
+            showErrorMessage("Error al marcar la tarea: " + e.getMessage());
+        }
+    }
 
     public void showMessage(String mensaje)
     {
