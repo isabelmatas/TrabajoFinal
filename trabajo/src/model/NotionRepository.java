@@ -1,5 +1,6 @@
 package model;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Map;
 
 import notion.api.v1.NotionClient;
@@ -9,6 +10,8 @@ import notion.api.v1.model.databases.QueryResults;
 import notion.api.v1.model.pages.Page;
 import notion.api.v1.model.pages.PageParent;
 import notion.api.v1.model.pages.PageProperty;
+import notion.api.v1.model.pages.PageProperty.RichText;
+import notion.api.v1.model.pages.PageProperty.RichText.Text;
 import notion.api.v1.request.databases.QueryDatabaseRequest;
 import notion.api.v1.request.pages.CreatePageRequest;
 
@@ -48,6 +51,15 @@ public class NotionRepository implements IRepository
         {
             throw new RepositoryException("Error al agregar la tarea a Notion");
         }
+    }
+
+    private PageProperty createTitleProperty(String title)
+    {
+        RichText idText = new RichText();
+        idText.setText(new Text(title));
+        PageProperty idProperty = new PageProperty();
+        idProperty.setTitle(Collections.singletonList(idText));
+        return idProperty;
     }
 
     public ArrayList<Task> getAllTask() throws RepositoryException
