@@ -89,11 +89,6 @@ public class Controller
         return tareasIncompletas;
     }
 
-    public void getTareasCompletas()
-    {
-        //
-    }
-
     public void exportarTareas(String tipo, String ruta) throws RepositoryException
     {
         try
@@ -134,6 +129,15 @@ public class Controller
 
     public void finalizarAplicacion()
     {
-        //
+        try
+        {
+            repository.guardarTareas();
+            view.showMessage("El estado se ha guardado correctamente");
+        }
+        catch(RepositoryException e)
+        {
+            view.showErrorMessage("Error al guardar el estado");
+        }
+        view.end();
     }
 }

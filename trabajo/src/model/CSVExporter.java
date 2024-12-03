@@ -44,7 +44,7 @@ public class CSVExporter implements IExporter
             for(String linea : lineas)
             {
                 Task tarea = getTareaFromDelimitedString(linea, ",");
-                if(tarea != null)
+                if(tarea != null && !tareas.contains(tarea))
                 {
                     tareas.add(tarea);
                 }
