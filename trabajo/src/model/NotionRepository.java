@@ -62,6 +62,38 @@ public class NotionRepository implements IRepository
         return idProperty;
     }
 
+    private PageProperty createRichTextProperty(String text)
+    {
+        RichText richText = new RichText();
+        richText.setText(new Text(text));
+        PageProperty property = new PageProperty();
+        property.setRichText(Collections.singletonList(richText));
+        return property;
+    }
+
+    private PageProperty createNumberProperty(int number)
+    {
+        PageProperty property = new PageProperty();
+        property.setNumber(number);
+        return property;
+    }
+
+    private PageProperty createDateProperty(String date)
+    {
+        PageProperty property = new PageProperty();
+        PageProperty.Date dateProperty = new PageProperty.Date();
+        dateProperty.setStart(date);
+        property.setDate(dateProperty);
+        return property;
+    }
+
+    private PageProperty createCheckboxProperty(boolean checked)
+    {
+        PageProperty property = new PageProperty();
+        property.setCheckbox(checked);
+        return property;
+    }
+
     public ArrayList<Task> getAllTask() throws RepositoryException
     {
         ArrayList<Task> tareas = new ArrayList<>();
