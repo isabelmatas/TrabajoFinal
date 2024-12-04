@@ -89,4 +89,11 @@ public class Task
     {
         return completed;
     }
+
+    @Override
+    public String toString()
+    {
+        return "Tarea [identifer: " + identifier + ", title: " + title + ", date: " + date + ", content: " + content + ", priority: " + priority
+        + ", estimatedDuration: " + estimatedDuration + " , completed: " + completed + "]";
+    }
 }
