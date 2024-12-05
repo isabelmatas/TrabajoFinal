@@ -218,7 +218,7 @@ public class InteractiveView extends BaseView
     {
         try
         {
-            String tipo = readString("Introduce el tipo del archivo (json/csv):");
+            String tipo = readString("Introduce el tipo del archivo (json/csv): ");
             String ruta = System.getProperty("user.home") + "/output." + tipo;
             controlador.exportarTareas(tipo, ruta);
             showMessage("Las tareas se han exportado correctamente");
