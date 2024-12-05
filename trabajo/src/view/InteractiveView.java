@@ -80,11 +80,21 @@ public class InteractiveView extends BaseView
             
             System.out.print("Introduce la fecha (yyyy-mm-dd): ");
             String fecha = sc.nextLine();
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             Date date = dateFormat.parse(fecha); 
 
             String content = readString("Introduce el contenido: ");
-            int priority = readInt("Introduce la prioridad (1-5): ");
+
+            int priority; 
+            do
+            {
+                priority = readInt("Introduce la prioridad (1-5): ");
+                if(priority < 1 || priority > 5)
+                {
+                    showErrorMessage("Error. La prioridad debe estar entre 1 y 5");
+                }
+            }while(priority < 1 || priority > 5);
+
             int estimatedDuration = readInt("Introduce la duracion estimada: ");
             
             System.out.print("Tarea completada? (true/false): ");
