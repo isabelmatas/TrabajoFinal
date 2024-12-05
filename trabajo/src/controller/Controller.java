@@ -108,6 +108,7 @@ public class Controller
 
     public void importarTareas(String tipo, String ruta) throws RepositoryException
     {
+        boolean tareasImportadas = true;
         try
         {
             IExporter exporter = ExporterFactory.crearExporter(tipo);
@@ -121,9 +122,17 @@ public class Controller
                 catch(RepositoryException e)
                 {
                     view.showErrorMessage("Error al importar la tarea");
+                    tareasImportadas = false;
                 }
             }
-            view.showMessage("Las tareas se han importado correctamente");
+            if(tareasImportadas)
+            {
+                view.showMessage("Las tareas se han importado correctamente");
+            }
+            else
+            {
+                view.showErrorMessage("No se han importado todas las tareas (duplicados)");
+            }
         }
         catch(ExporterException e)
         {

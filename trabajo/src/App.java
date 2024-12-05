@@ -28,8 +28,9 @@ public class App
             {
                 repository = new BinaryRepository();
             }
-            BaseView view = new InteractiveView(new Controller(repository, null));
+            BaseView view = new InteractiveView(null);
             Controller controller = new Controller(repository, view);
+            view.controlador = controller;
             controller.iniciarAplicacion();
         }
         catch(RepositoryException e)

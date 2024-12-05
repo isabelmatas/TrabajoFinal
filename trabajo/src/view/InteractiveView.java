@@ -31,7 +31,7 @@ public class InteractiveView extends BaseView
             System.out.println("6. Eliminar tarea");
             System.out.println("7. Exportar tareas (JSON/CSV)");
             System.out.println("8. Importar tareas (JSON/CSV)");
-            System.out.println("9. Volver al menu principal");
+            System.out.println("9. Salir");
             opcion = readInt("Introduce una opcion: ");
             
             switch(opcion)
@@ -221,7 +221,6 @@ public class InteractiveView extends BaseView
             String tipo = readString("Introduce el tipo del archivo (json/csv): ");
             String ruta = System.getProperty("user.home") + "/output." + tipo;
             controlador.exportarTareas(tipo, ruta);
-            showMessage("Las tareas se han exportado correctamente");
         }
         catch(Exception e)
         {
@@ -233,10 +232,9 @@ public class InteractiveView extends BaseView
     {
         try
         {
-            String tipo = readString("Introduce el tipo del archivo (json/csv):");
+            String tipo = readString("Introduce el tipo del archivo (json/csv): ");
             String ruta = System.getProperty("user.home") + "/output." + tipo;
             controlador.importarTareas(tipo, ruta);
-            showMessage("Las tareas se han importado correctamente");
         }
         catch(Exception e)
         {
