@@ -38,6 +38,11 @@ public class NotionRepository implements IRepository
     {
         try
         {
+            String id = findPageIdByIdentifier(tarea.getIdentifier());
+            if(id != null)
+            {
+                throw new RepositoryException("Ya existe una tarea con ese id");
+            }
             Map<String, PageProperty> properties = Map.of(
                 "identifier", createTitleProperty(String.valueOf(tarea.getIdentifier())),
                 "title", createRichTextProperty(tarea.getTitle()),

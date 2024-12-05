@@ -94,7 +94,7 @@ public class Task implements Serializable
 
     @Override
     public String toString()
-    {
+    {    
         return "Tarea [identifer: " + identifier + ", title: " + title + ", date: " + date + ", content: " + content + ", priority: " + priority
         + ", estimatedDuration: " + estimatedDuration + ", completed: " + completed + "]";
     }

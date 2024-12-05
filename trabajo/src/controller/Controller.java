@@ -3,7 +3,6 @@ import view.BaseView;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-
 import model.BinaryRepository;
 import model.ExporterException;
 import model.ExporterFactory;
@@ -151,7 +150,6 @@ public class Controller
         {
             view.showErrorMessage("Error al guardar el estado");
         }
-
         view.end();
     }
 }

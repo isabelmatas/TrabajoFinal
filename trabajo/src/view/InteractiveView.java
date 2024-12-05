@@ -75,6 +75,7 @@ public class InteractiveView extends BaseView
     {
         try
         {
+            // si añado otra tarea con el mismo identificador no deja crearla (BinaryRepository)
             int identifier = readInt("Introduce el identificador: ");
             String title = readString("Introduce el titulo: ");
             
@@ -93,7 +94,7 @@ public class InteractiveView extends BaseView
                 {
                     showErrorMessage("Error. La prioridad debe estar entre 1 y 5");
                 }
-            }while(priority < 1 || priority > 5);
+            } while(priority < 1 || priority > 5);
 
             int estimatedDuration = readInt("Introduce la duracion estimada: ");
             
