@@ -144,13 +144,13 @@ public class InteractiveView extends BaseView
                 showMessage("La tarea no se ha encontrado");
             }
             String title = readString("Introduce el nuevo titulo: ");
-            String content = readString("Introduce el nuevo contenido: ");
-
+            
             System.out.print("Introduce la nueva fecha (yyyy-mm-dd): ");
             String fecha = sc.nextLine();
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
             Date date = dateFormat.parse(fecha); 
 
+            String content = readString("Introduce el nuevo contenido: ");
             int priority = readInt("Introduce la nueva prioridad (1-5): ");
             int estimatedDuration = readInt("Introduce la nueva duracion: ");
 
