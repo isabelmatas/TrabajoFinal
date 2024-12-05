@@ -1,4 +1,5 @@
 package model;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -22,6 +23,7 @@ public class NotionRepository implements IRepository
     private final NotionClient client;
     private final String databaseId;
     private final String titleColumnName = "identifier";
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     public NotionRepository(String apiToken, String databaseId)
     {
@@ -136,7 +138,7 @@ public class NotionRepository implements IRepository
             Map<String, PageProperty> updatedProperties = Map.of(
                 "title", createRichTextProperty(tarea.getTitle()),
                 "content", createRichTextProperty(tarea.getContent()),
-                "prioriry", createNumberProperty(tarea.getPriority()),
+                "priority", createNumberProperty(tarea.getPriority()),
                 "date", createDateProperty(tarea.getDate().toString()),
                 "estimatedDuration", createNumberProperty(tarea.getEstimatedDuration()),
                 "completed", createCheckboxProperty(tarea.getCompleted())
@@ -177,7 +179,8 @@ public class NotionRepository implements IRepository
             String title = properties.get("title").getRichText().get(0).getText().getContent();
             String content = properties.get("content").getRichText().get(0).getText().getContent();
             int priority = properties.get("priority").getNumber().intValue();
-            Date date = new Date(properties.get("date").getDate().getStart());
+            String dateString = properties.get("date").getDate().getStart();
+            Date date = dateFormat.parse(dateString);
             int estimatedDuration = properties.get("estimatedDuration").getNumber().intValue();
             boolean completed = properties.get("completed").getCheckbox();
             return new Task(identifier, title, date, content, priority, estimatedDuration, completed);

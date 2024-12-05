@@ -12,6 +12,7 @@ import com.google.gson.reflect.TypeToken;
 
 public class JSONExporter implements IExporter
 {
+    @Override
     public void exportarTareas(ArrayList<Task> tareas, String archivo) throws ExporterException
     {
         Path ruta = Path.of(archivo);
@@ -27,6 +28,7 @@ public class JSONExporter implements IExporter
         }
     }
 
+    @Override
     public ArrayList<Task> importarTareas(String archivo) throws ExporterException
     {
         Path ruta = Path.of(archivo);

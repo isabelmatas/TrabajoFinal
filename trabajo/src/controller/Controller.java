@@ -3,17 +3,20 @@ import view.BaseView;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+
+import model.BinaryRepository;
 import model.ExporterException;
 import model.ExporterFactory;
 import model.IExporter;
 import model.IRepository;
+import model.NotionRepository;
 import model.RepositoryException;
 import model.Task;
 
 public class Controller
 {
-    private IRepository repository;
-    private BaseView view;
+    private final IRepository repository;
+    private final BaseView view;
     
     public Controller(IRepository repository, BaseView view)
     {
@@ -96,6 +99,7 @@ public class Controller
             IExporter exporter = ExporterFactory.crearExporter(tipo);
             ArrayList<Task> tareas = repository.getAllTask();
             exporter.exportarTareas(tareas, ruta);
+            view.showMessage("Las tareas se han exportado correctamente");
         }
         catch (ExporterException e)
         {
@@ -120,6 +124,7 @@ public class Controller
                     view.showErrorMessage("Error al importar la tarea");
                 }
             }
+            view.showMessage("Las tareas se han importado correctamente");
         }
         catch(ExporterException e)
         {
@@ -131,13 +136,22 @@ public class Controller
     {
         try
         {
-            repository.guardarTareas();
-            view.showMessage("El estado se ha guardado correctamente");
+            if (repository instanceof BinaryRepository)
+            {
+                BinaryRepository binRepository = (BinaryRepository) repository;
+                binRepository.guardarTareas();
+                view.showMessage("El estado se ha guardado correctamente en el archivo binario");
+            }
+            else if (repository instanceof NotionRepository)
+            {
+                view.showMessage("El estado se ha guardado correctamente en Notion");
+            }
         }
         catch(RepositoryException e)
         {
             view.showErrorMessage("Error al guardar el estado");
         }
+
         view.end();
     }
 }

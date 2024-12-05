@@ -16,6 +16,7 @@ public class InteractiveView extends BaseView
         super(controlador);
     }
 
+    @Override
     public void init()
     {
         int opcion;
@@ -70,7 +71,7 @@ public class InteractiveView extends BaseView
     }
 
 
-    public void crearTarea()
+    private void crearTarea()
     {
         try
         {
@@ -99,7 +100,7 @@ public class InteractiveView extends BaseView
         }
     }
 
-    public void eliminarTarea()
+    private void eliminarTarea()
     {
         try
         {
@@ -121,7 +122,7 @@ public class InteractiveView extends BaseView
         }
     }
 
-    public void modificarTarea()
+    private void modificarTarea()
     {
         try
         {
@@ -156,7 +157,7 @@ public class InteractiveView extends BaseView
         }
     }
 
-    public void listarTareasIncompletas()
+    private void listarTareasIncompletas()
     {
         try
         {
@@ -179,7 +180,7 @@ public class InteractiveView extends BaseView
         }
     }
 
-    public void listarTareas()
+    private void listarTareas()
     {
         try
         {
@@ -202,7 +203,7 @@ public class InteractiveView extends BaseView
         } 
     }
 
-    public void exportarTareas()
+    private void exportarTareas()
     {
         try
         {
@@ -217,7 +218,7 @@ public class InteractiveView extends BaseView
         }
     }
 
-    public void importarTareas()
+    private void importarTareas()
     {
         try
         {
@@ -256,16 +257,19 @@ public class InteractiveView extends BaseView
         }
     }
 
+    @Override
     public void showMessage(String mensaje)
     {
         System.out.println(mensaje);
     }
 
+    @Override
     public void showErrorMessage(String mensajeError)
     {
         System.err.println(mensajeError);
     }
 
+    @Override
     public void end()
     {
         showMessage("Saliendo...");

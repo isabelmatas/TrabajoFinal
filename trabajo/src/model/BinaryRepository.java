@@ -17,7 +17,7 @@ public class BinaryRepository implements IRepository
         cargarTareas();
     }
 
-    public void cargarTareas() throws RepositoryException
+    private void cargarTareas() throws RepositoryException
     {
         File archivo = new File(ruta);
         if(archivo.exists() && archivo.isFile())
@@ -49,6 +49,7 @@ public class BinaryRepository implements IRepository
         }
     }
 
+    @Override
     public Task addTask(Task tarea) throws RepositoryException
     {
         for(Task t : tareas)
@@ -63,6 +64,7 @@ public class BinaryRepository implements IRepository
         return tarea;
     }
 
+    @Override
     public void removeTask(Task tarea) throws RepositoryException
     {
         if(!tareas.remove(tarea))
@@ -72,6 +74,7 @@ public class BinaryRepository implements IRepository
         guardarTareas();
     }
 
+    @Override
     public void modifyTask(Task tarea) throws RepositoryException
     {
         boolean tareaModificada = false;
@@ -97,7 +100,8 @@ public class BinaryRepository implements IRepository
         guardarTareas();
     }
 
-    public ArrayList<Task> getAllTask()
+    @Override
+    public ArrayList<Task> getAllTask() throws RepositoryException
     {
         return new ArrayList<>(tareas);
     }

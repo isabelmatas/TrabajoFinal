@@ -1,8 +1,10 @@
 package model;
+import java.io.Serializable;
 import java.util.Date;
 
-public class Task 
+public class Task implements Serializable
 {
+    private static final long serialVersionUID = 1L;
     private int identifier;
     private String title;
     private Date date;
@@ -94,6 +96,6 @@ public class Task
     public String toString()
     {
         return "Tarea [identifer: " + identifier + ", title: " + title + ", date: " + date + ", content: " + content + ", priority: " + priority
-        + ", estimatedDuration: " + estimatedDuration + " , completed: " + completed + "]";
+        + ", estimatedDuration: " + estimatedDuration + ", completed: " + completed + "]";
     }
 }
