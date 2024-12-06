@@ -17,6 +17,7 @@ public class BinaryRepository implements IRepository
         cargarTareas();
     }
 
+    @SuppressWarnings("unchecked")
     private void cargarTareas() throws RepositoryException
     {
         File archivo = new File(ruta);

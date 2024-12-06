@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Map;
-
 import notion.api.v1.NotionClient;
 import notion.api.v1.http.OkHttp5Client;
 import notion.api.v1.logging.Slf4jLogger;
@@ -46,7 +45,7 @@ public class NotionRepository implements IRepository
             Map<String, PageProperty> properties = Map.of(
                 "identifier", createTitleProperty(String.valueOf(tarea.getIdentifier())),
                 "title", createRichTextProperty(tarea.getTitle()),
-                "date", createDateProperty(tarea.getDate().toString()),
+                "date", createDateProperty(dateFormat.format(tarea.getDate())),
                 "content", createRichTextProperty(tarea.getContent()),
                 "priority", createNumberProperty(tarea.getPriority()),
                 "estimatedDuration", createNumberProperty(tarea.getEstimatedDuration()),
@@ -59,14 +58,15 @@ public class NotionRepository implements IRepository
         }
         catch(Exception e)
         {
-            throw new RepositoryException("Error al agregar la tarea a Notion");
+            e.printStackTrace();
+            throw new RepositoryException("Error al agregar la tarea a Notion: " + e.getMessage());
         }
     }
 
-    private PageProperty createTitleProperty(String title)
+    private PageProperty createTitleProperty(String identifier)
     {
         RichText idText = new RichText();
-        idText.setText(new Text(title));
+        idText.setText(new Text(identifier));
         PageProperty idProperty = new PageProperty();
         idProperty.setTitle(Collections.singletonList(idText));
         return idProperty;
@@ -142,9 +142,9 @@ public class NotionRepository implements IRepository
             }
             Map<String, PageProperty> updatedProperties = Map.of(
                 "title", createRichTextProperty(tarea.getTitle()),
+                "date", createDateProperty(tarea.getDate().toString()),
                 "content", createRichTextProperty(tarea.getContent()),
                 "priority", createNumberProperty(tarea.getPriority()),
-                "date", createDateProperty(tarea.getDate().toString()),
                 "estimatedDuration", createNumberProperty(tarea.getEstimatedDuration()),
                 "completed", createCheckboxProperty(tarea.getCompleted())
             );
@@ -182,10 +182,10 @@ public class NotionRepository implements IRepository
         {
             int identifier = Integer.parseInt(properties.get("identifier").getTitle().get(0).getText().getContent());
             String title = properties.get("title").getRichText().get(0).getText().getContent();
-            String content = properties.get("content").getRichText().get(0).getText().getContent();
-            int priority = properties.get("priority").getNumber().intValue();
             String dateString = properties.get("date").getDate().getStart();
             Date date = dateFormat.parse(dateString);
+            String content = properties.get("content").getRichText().get(0).getText().getContent();
+            int priority = properties.get("priority").getNumber().intValue();
             int estimatedDuration = properties.get("estimatedDuration").getNumber().intValue();
             boolean completed = properties.get("completed").getCheckbox();
             return new Task(identifier, title, date, content, priority, estimatedDuration, completed);
