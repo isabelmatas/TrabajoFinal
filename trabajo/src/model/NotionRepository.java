@@ -142,7 +142,7 @@ public class NotionRepository implements IRepository
             }
             Map<String, PageProperty> updatedProperties = Map.of(
                 "taskTitle", createRichTextProperty(tarea.getTitle()),
-                "date", createDateProperty(tarea.getDate().toString()),
+                "date", createDateProperty(dateFormat.format(tarea.getDate())),
                 "content", createRichTextProperty(tarea.getContent()),
                 "priority", createNumberProperty(tarea.getPriority()),
                 "estimatedDuration", createNumberProperty(tarea.getEstimatedDuration()),
@@ -153,7 +153,7 @@ public class NotionRepository implements IRepository
         }
         catch(Exception e)
         {
-            throw new RepositoryException("Error al modificar la tarea");
+            throw new RepositoryException("Error al modificar la tarea: " + e.getMessage());
         }
     }
 
