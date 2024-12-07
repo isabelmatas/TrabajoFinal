@@ -44,7 +44,7 @@ public class NotionRepository implements IRepository
             }
             Map<String, PageProperty> properties = Map.of(
                 "identifier", createTitleProperty(String.valueOf(tarea.getIdentifier())),
-                "title", createRichTextProperty(tarea.getTitle()),
+                "taskTitle", createRichTextProperty(tarea.getTitle()),
                 "date", createDateProperty(dateFormat.format(tarea.getDate())),
                 "content", createRichTextProperty(tarea.getContent()),
                 "priority", createNumberProperty(tarea.getPriority()),
@@ -141,7 +141,7 @@ public class NotionRepository implements IRepository
                 throw new RepositoryException("La tarea no se ha encontrado");
             }
             Map<String, PageProperty> updatedProperties = Map.of(
-                "title", createRichTextProperty(tarea.getTitle()),
+                "taskTitle", createRichTextProperty(tarea.getTitle()),
                 "date", createDateProperty(tarea.getDate().toString()),
                 "content", createRichTextProperty(tarea.getContent()),
                 "priority", createNumberProperty(tarea.getPriority()),
@@ -181,7 +181,7 @@ public class NotionRepository implements IRepository
         try
         {
             int identifier = Integer.parseInt(properties.get("identifier").getTitle().get(0).getText().getContent());
-            String title = properties.get("title").getRichText().get(0).getText().getContent();
+            String title = properties.get("taskTitle").getRichText().get(0).getText().getContent();
             String dateString = properties.get("date").getDate().getStart();
             Date date = dateFormat.parse(dateString);
             String content = properties.get("content").getRichText().get(0).getText().getContent();
