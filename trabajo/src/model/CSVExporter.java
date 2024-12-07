@@ -70,7 +70,7 @@ public class CSVExporter implements IExporter
         {
             int identifier = Integer.parseInt(tasks[0]);
             String title = tasks[1];
-            SimpleDateFormat fecha = new SimpleDateFormat("yyyy-mm-dd");
+            SimpleDateFormat fecha = new SimpleDateFormat("yyyy-MM-dd");
             Date date = fecha.parse(tasks[2]);
             String content = tasks[3];
             int priority = Integer.parseInt(tasks[4]);
