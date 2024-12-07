@@ -23,7 +23,7 @@ public class CSVExporter implements IExporter
                 StringBuilder linea = new StringBuilder();
                 linea.append(tarea.getIdentifier()).append(",").append(tarea.getTitle()).append(",").append(fecha.format(tarea.getDate())).append(",")
                 .append(tarea.getContent()).append(",").append(tarea.getPriority()).append(",").append(tarea.getEstimatedDuration())
-                .append(",").append(archivo).append(tarea.getCompleted());
+                .append(",").append(tarea.getCompleted());
                 lineas.add(linea.toString());
             }
             Files.write(ruta, lineas, StandardCharsets.UTF_8);
