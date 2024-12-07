@@ -246,7 +246,7 @@ public class InteractiveView extends BaseView
     {
         try
         {
-            int identifier = readInt("Introduce el id de la tarea para marcarla como completada/incompletada: ");
+            int identifier = readInt("Introduce el id de la tarea para marcarla como completa/incompleta: ");
             Task tarea = controlador.comprobar(identifier);
             if(tarea == null)
             {
