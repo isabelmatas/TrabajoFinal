@@ -17,7 +17,7 @@ public class CSVExporter implements IExporter
         {
             Path ruta = Path.of(archivo);
             ArrayList <String> lineas = new ArrayList<>();
-            SimpleDateFormat fecha = new SimpleDateFormat("yyyy-mm-dd");
+            SimpleDateFormat fecha = new SimpleDateFormat("yyyy-MM-dd");
             for(Task tarea : tareas)
             {
                 StringBuilder linea = new StringBuilder();
