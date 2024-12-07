@@ -147,7 +147,7 @@ public class InteractiveView extends BaseView
             
             System.out.print("Introduce la nueva fecha (yyyy-mm-dd): ");
             String fecha = sc.nextLine();
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             Date date = dateFormat.parse(fecha); 
 
             String content = readString("Introduce el nuevo contenido: ");
