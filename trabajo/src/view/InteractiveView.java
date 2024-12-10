@@ -70,6 +70,7 @@ public class InteractiveView extends BaseView
         } while(opcion != 9);
     }
 
+    
 
     private void crearTarea()
     {
@@ -220,7 +221,8 @@ public class InteractiveView extends BaseView
         {
             String tipo = readString("Introduce el tipo del archivo (json/csv): ");
             String ruta = System.getProperty("user.home") + "/output." + tipo;
-            controlador.exportarTareas(tipo, ruta);
+            controlador.setExporter(tipo);
+            controlador.exportarTareas(ruta);
         }
         catch(Exception e)
         {
@@ -234,7 +236,8 @@ public class InteractiveView extends BaseView
         {
             String tipo = readString("Introduce el tipo del archivo (json/csv): ");
             String ruta = System.getProperty("user.home") + "/output." + tipo;
-            controlador.importarTareas(tipo, ruta);
+            controlador.setExporter(tipo);
+            controlador.importarTareas(ruta);
         }
         catch(Exception e)
         {

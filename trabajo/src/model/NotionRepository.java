@@ -23,6 +23,7 @@ public class NotionRepository implements IRepository
     private final String databaseId;
     private final String titleColumnName = "identifier";
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    private IExporter exporter;
 
     public NotionRepository(String apiToken, String databaseId)
     {
@@ -217,5 +218,43 @@ public class NotionRepository implements IRepository
             throw new RepositoryException("Error al buscar por identificador");
         }
         return null;
+    }
+
+    @Override
+    public void setExporter(IExporter exporter)
+    {
+        this.exporter = exporter;
+    }
+
+    @Override
+    public void exportarTareas(String archivo) throws RepositoryException, ExporterException
+    {
+        if (exporter == null)
+        {
+            throw new RepositoryException("No se ha configurado un exportador");
+        }
+        exporter.exportarTareas(getAllTask(), archivo); 
+    }
+
+    @Override
+    public void importarTareas(String archivo) throws RepositoryException, ExporterException
+    {
+        if (exporter == null)
+        {
+            throw new RepositoryException("No se ha configurado un exportador");
+        }
+
+        ArrayList<Task> tareas = exporter.importarTareas(archivo);
+        for (Task t : tareas)
+        {
+            try
+            {
+                addTask(t);
+            }
+            catch(RepositoryException e)
+            {
+
+            }
+        }
     }
 }

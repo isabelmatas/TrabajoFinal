@@ -12,7 +12,7 @@ public class App
     {
         try
         {
-            IRepository repository;
+            IRepository repository = null;
             if(args.length > 0 && args[0].equals("notion"))
             {
                 if(args.length < 3)

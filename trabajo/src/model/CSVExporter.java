@@ -21,8 +21,12 @@ public class CSVExporter implements IExporter
             for(Task tarea : tareas)
             {
                 StringBuilder linea = new StringBuilder();
-                linea.append(tarea.getIdentifier()).append(",").append(tarea.getTitle()).append(",").append(fecha.format(tarea.getDate())).append(",")
-                .append(tarea.getContent()).append(",").append(tarea.getPriority()).append(",").append(tarea.getEstimatedDuration())
+                linea.append(tarea.getIdentifier()).append(",")
+                .append(tarea.getTitle()).append(",")
+                .append(fecha.format(tarea.getDate())).append(",")
+                .append(tarea.getContent()).append(",")
+                .append(tarea.getPriority()).append(",")
+                .append(tarea.getEstimatedDuration())
                 .append(",").append(tarea.getCompleted());
                 lineas.add(linea.toString());
             }

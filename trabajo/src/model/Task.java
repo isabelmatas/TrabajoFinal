@@ -1,5 +1,6 @@
 package model;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Task implements Serializable
@@ -95,7 +96,9 @@ public class Task implements Serializable
     @Override
     public String toString()
     {    
-        return "Tarea [identifer: " + identifier + ", title: " + title + ", date: " + date + ", content: " + content + ", priority: " + priority
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String fecha = dateFormat.format(date);
+        return "Tarea [identifer: " + identifier + ", title: " + title + ", date: " + fecha + ", content: " + content + ", priority: " + priority
         + ", estimatedDuration: " + estimatedDuration + ", completed: " + completed + "]";
     }
 }

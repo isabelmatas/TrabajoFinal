@@ -23,6 +23,46 @@ public class Controller
         this.view = view;
     }
 
+    public void setExporter(String tipo)
+    {
+        try
+        {
+            IExporter exporter = ExporterFactory.crearExporter(tipo);
+            repository.setExporter(exporter);
+            view.showMessage("Exportador configurado correctamente");
+        }
+        catch(ExporterException e)
+        {
+            view.showErrorMessage("Error al configurar el exportador: " + e.getMessage());
+        }
+    }
+
+    public void exportarTareas(String archivo)
+    {
+        try
+        {
+            repository.exportarTareas(archivo);
+            view.showMessage("Tareas exportadas correctamente");
+        }
+        catch(RepositoryException | ExporterException e)
+        {
+            view.showErrorMessage("Error al exportar tareas: " + e.getMessage());
+        }
+    }
+
+    public void importarTareas(String archivo)
+    {
+        try
+        {
+            repository.importarTareas(archivo);
+            view.showMessage("Tareas importadas correctamente");
+        }
+        catch(RepositoryException | ExporterException e)
+        {
+            view.showErrorMessage("Error al importar tareas: " + e.getMessage());
+        }
+    }
+
     public void iniciarAplicacion()
     {
         try
@@ -89,55 +129,6 @@ public class Controller
             }
         });
         return tareasIncompletas;
-    }
-
-    public void exportarTareas(String tipo, String ruta) throws RepositoryException
-    {
-        try
-        {
-            IExporter exporter = ExporterFactory.crearExporter(tipo);
-            ArrayList<Task> tareas = repository.getAllTask();
-            exporter.exportarTareas(tareas, ruta);
-            view.showMessage("Las tareas se han exportado correctamente");
-        }
-        catch (ExporterException e)
-        {
-            view.showErrorMessage("Error al exportar las tareas: " + e.getMessage());
-        }
-    }
-
-    public void importarTareas(String tipo, String ruta) throws RepositoryException
-    {
-        boolean tareasImportadas = true;
-        try
-        {
-            IExporter exporter = ExporterFactory.crearExporter(tipo);
-            ArrayList<Task> tareas = exporter.importarTareas(ruta);
-            for(Task t : tareas)
-            {
-                try
-                {
-                    addTask(t);
-                }
-                catch(RepositoryException e)
-                {
-                    view.showErrorMessage("Error al importar la tarea");
-                    tareasImportadas = false;
-                }
-            }
-            if(tareasImportadas)
-            {
-                view.showMessage("Las tareas se han importado correctamente");
-            }
-            else
-            {
-                view.showErrorMessage("No se han importado todas las tareas (duplicados)");
-            }
-        }
-        catch(ExporterException e)
-        {
-            view.showErrorMessage("Error al importar las tareas: " + e.getMessage());
-        }
     }
 
     public void finalizarAplicacion()

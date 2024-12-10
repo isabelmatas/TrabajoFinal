@@ -11,10 +11,48 @@ public class BinaryRepository implements IRepository
 {
     private final String ruta = System.getProperty("user.home") + "/tasks.bin";
     private ArrayList<Task> tareas;
+    private IExporter exporter;
 
     public BinaryRepository() throws RepositoryException
     {
         cargarTareas();
+    }
+
+    @Override
+    public void setExporter(IExporter exporter)
+    {
+        this.exporter = exporter;
+    }
+
+    @Override
+    public void exportarTareas(String archivo) throws RepositoryException, ExporterException
+    {
+        if(exporter == null)
+        {
+            throw new RepositoryException("Error. No hay ningun exportador");
+        }
+        exporter.exportarTareas(getAllTask(), archivo);
+    }
+
+    @Override
+    public void importarTareas(String archivo) throws RepositoryException, ExporterException
+    {
+        if(exporter == null)
+        {
+            throw new RepositoryException("Error. No hay ningun exportador");
+        }
+        ArrayList<Task> tareasImportadas = exporter.importarTareas(archivo);
+        for(Task tarea : tareasImportadas)
+        {
+            try
+            {
+                addTask(tarea);
+            }
+            catch(RepositoryException e)
+            {
+
+            }
+        }
     }
 
     @SuppressWarnings("unchecked")
