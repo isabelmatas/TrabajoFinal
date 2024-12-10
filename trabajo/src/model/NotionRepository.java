@@ -257,4 +257,10 @@ public class NotionRepository implements IRepository
             }
         }
     }
+
+    @Override
+    public void guardarEstado() throws RepositoryException
+    {
+    
+    }
 }

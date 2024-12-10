@@ -3,12 +3,10 @@ import view.BaseView;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import model.BinaryRepository;
 import model.ExporterException;
 import model.ExporterFactory;
 import model.IExporter;
 import model.IRepository;
-import model.NotionRepository;
 import model.RepositoryException;
 import model.Task;
 
@@ -135,20 +133,12 @@ public class Controller
     {
         try
         {
-            if (repository instanceof BinaryRepository)
-            {
-                BinaryRepository binRepository = (BinaryRepository) repository;
-                binRepository.guardarTareas();
-                view.showMessage("El estado se ha guardado correctamente en el archivo binario");
-            }
-            else if (repository instanceof NotionRepository)
-            {
-                view.showMessage("El estado se ha guardado correctamente en Notion");
-            }
+            repository.guardarEstado();
+            view.showMessage("El estado se ha guardado correctamente");
         }
         catch(RepositoryException e)
         {
-            view.showErrorMessage("Error al guardar el estado");
+            view.showErrorMessage("Error al guardar el estado: " + e.getMessage());
         }
         view.end();
     }

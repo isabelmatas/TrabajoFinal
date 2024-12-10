@@ -89,6 +89,12 @@ public class BinaryRepository implements IRepository
     }
 
     @Override
+    public void guardarEstado() throws RepositoryException
+    {
+        guardarTareas();;
+    }
+
+    @Override
     public Task addTask(Task tarea) throws RepositoryException
     {
         for(Task t : tareas)

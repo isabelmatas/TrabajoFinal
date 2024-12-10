@@ -10,4 +10,5 @@ public interface IRepository
     void setExporter(IExporter exporter);
     void exportarTareas(String archivo) throws RepositoryException, ExporterException;
     void importarTareas(String archivo) throws RepositoryException, ExporterException;
+    void guardarEstado() throws RepositoryException;
 }
