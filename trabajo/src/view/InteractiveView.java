@@ -143,6 +143,7 @@ public class InteractiveView extends BaseView
             if(tarea == null)
             {
                 showMessage("La tarea no se ha encontrado");
+                return;
             }
             String title = readString("Introduce el nuevo titulo: ");
             
