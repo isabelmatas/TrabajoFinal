@@ -3,6 +3,7 @@ import view.BaseView;
 import view.InteractiveView;
 import model.BinaryRepository;
 import model.IRepository;
+import model.Model;
 import model.NotionRepository;
 import model.RepositoryException;
 
@@ -28,10 +29,12 @@ public class App
             {
                 repository = new BinaryRepository();
             }
+            Model model = new Model(repository, null);
             BaseView view = new InteractiveView(null);
-            Controller controller = new Controller(repository, view);
+            Controller controller = new Controller(model, view);
             view.controlador = controller;
             controller.iniciarAplicacion();
+            controller.finalizarAplicacion();
         }
         catch(RepositoryException e)
         {

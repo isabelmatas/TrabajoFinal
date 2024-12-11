@@ -61,6 +61,11 @@ public class Model
         }
     }
 
+    public void guardarEstado() throws RepositoryException
+    {
+        repository.guardarEstado();
+    }
+
     public void setRepository(IRepository repository)
     {
         this.repository = repository;

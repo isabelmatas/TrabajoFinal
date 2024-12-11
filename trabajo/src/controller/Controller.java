@@ -6,18 +6,18 @@ import java.util.Comparator;
 import model.ExporterException;
 import model.ExporterFactory;
 import model.IExporter;
-import model.IRepository;
+import model.Model;
 import model.RepositoryException;
 import model.Task;
 
 public class Controller
 {
-    private final IRepository repository;
+    private final Model model;
     private final BaseView view;
     
-    public Controller(IRepository repository, BaseView view)
+    public Controller(Model model, BaseView view)
     {
-        this.repository = repository;
+        this.model = model;
         this.view = view;
     }
 
@@ -26,7 +26,7 @@ public class Controller
         try
         {
             IExporter exporter = ExporterFactory.crearExporter(tipo);
-            repository.setExporter(exporter);
+            model.setExporter(exporter);
             view.showMessage("Exportador configurado correctamente");
         }
         catch(ExporterException e)
@@ -39,7 +39,7 @@ public class Controller
     {
         try
         {
-            repository.exportarTareas(archivo);
+            model.exportarTareas(archivo);
             view.showMessage("Tareas exportadas correctamente");
         }
         catch(RepositoryException | ExporterException e)
@@ -52,7 +52,7 @@ public class Controller
     {
         try
         {
-            repository.importarTareas(archivo);
+            model.importarTareas(archivo);
             view.showMessage("Tareas importadas correctamente");
         }
         catch(RepositoryException | ExporterException e)
@@ -65,7 +65,7 @@ public class Controller
     {
         try
         {
-            repository.getAllTask();
+            model.getAllTask();
             view.showMessage("Se han cargado correctamente los datos");
         }
         catch(RepositoryException e)
@@ -78,27 +78,27 @@ public class Controller
 
     public ArrayList<Task> getAllTask() throws RepositoryException
     {
-        return repository.getAllTask();
+        return model.getAllTask();
     }
 
     public Task addTask(Task t) throws RepositoryException
     {
-        return repository.addTask(t);
+        return model.addTask(t);
     }
 
     public void removeTask(Task t) throws RepositoryException
     {
-        repository.removeTask(t);
+        model.removeTask(t);
     }
 
     public void modifyTask(Task t) throws RepositoryException
     {
-        repository.modifyTask(t);
+        model.modifyTask(t);
     }
 
     public Task comprobar(int identifier) throws RepositoryException
     {
-        for(Task t : repository.getAllTask())
+        for(Task t : model.getAllTask())
         {
             if(t.getIdentifier() == identifier)
             {
@@ -110,7 +110,7 @@ public class Controller
 
     public ArrayList<Task> getTareasIncompletas() throws RepositoryException
     {
-        ArrayList<Task> tareasCompletas = repository.getAllTask();
+        ArrayList<Task> tareasCompletas = model.getAllTask();
         ArrayList<Task> tareasIncompletas = new ArrayList<>();
         for(Task t : tareasCompletas)
         {
@@ -129,11 +129,25 @@ public class Controller
         return tareasIncompletas;
     }
 
+    /////
+    public void guardarEstado()
+    {
+        try
+        {
+            model.guardarEstado();
+            view.showMessage("El estado se ha guardado correctamente");
+        }
+        catch(RepositoryException e)
+        {
+            view.showErrorMessage("Error al guardar el estado: " + e.getMessage());
+        }
+    }
+
     public void finalizarAplicacion()
     {
         try
         {
-            repository.guardarEstado();
+            model.guardarEstado();
             view.showMessage("El estado se ha guardado correctamente");
         }
         catch(RepositoryException e)
