@@ -50,13 +50,18 @@ public class Model
         ArrayList<Task> tareasImportadas = exporter.importarTareas(archivo);
         for(Task tarea : tareasImportadas)
         {
-            try
+            boolean tareaDuplicada = false;
+            for (Task tareaExistente : repository.getAllTask())
             {
-                addTask(tarea);
+                if (tarea.getIdentifier() == tareaExistente.getIdentifier())
+                {
+                    tareaDuplicada = true;
+                    break;
+                }
             }
-            catch(RepositoryException e)
+            if (!tareaDuplicada)
             {
-
+                repository.addTask(tarea); 
             }
         }
     }
