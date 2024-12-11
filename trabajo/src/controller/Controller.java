@@ -129,7 +129,6 @@ public class Controller
         return tareasIncompletas;
     }
 
-    /////
     public void guardarEstado()
     {
         try
